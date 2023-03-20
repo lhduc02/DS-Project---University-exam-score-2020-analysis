@@ -7,3 +7,5 @@ Phân tích điểm thi Kỳ thi THPT Quốc gia 2020
 Sau đó, tôi phân tích file raw_data.txt thành file clean_data.csv (dữ liệu sạch) thông qua hàm main.py
 
 Cuối cùng, từ dữ liệu sạch này, tôi trực quan hóa dữ liệu bằng Python.
+
+Ngoài ra tôi còn trực quan hóa bằng Power BI, được biểu diễn ở file Phantich_2020.pbix, và hình ảnh trích xuất là visualizationbyPowerBi.png
