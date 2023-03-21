@@ -8,4 +8,4 @@ Sau đó, tôi phân tích file raw_data.txt thành file clean_data.csv (dữ li
 
 Cuối cùng, từ dữ liệu sạch này, tôi trực quan hóa dữ liệu bằng Python.
 
-Ngoài ra tôi còn trực quan hóa bằng Power BI, được biểu diễn ở file Phantich_2020.pbix, và hình ảnh trích xuất là vizualizationbyPowerBi.png
+Ngoài ra tôi còn trực quan hóa bằng Power BI, được biểu diễn ở file Phantich_2020.pbix, và hình ảnh trích xuất là visualizationbyPowerBi.png
