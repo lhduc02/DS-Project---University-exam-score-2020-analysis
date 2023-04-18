@@ -1,12 +1,12 @@
 import html
 import csv
 
-with open ("D:\\.Project\\DS Project\\Py_DLLT_DS\\clean_data.csv", "w", encoding="utf8", newline="") as file_csv:
+with open ("D:\\.Project\\DS Project\\Phan_tich_diem_thi\\test_data.csv", "w", encoding="utf8", newline="") as file_csv:
     header = ["sbd", "tên", "dd", "mm", "yy", "toán", "ngữ văn", "khxh", "khtn","lịch sử", "địa lí", "gdcd", "sinh học", "vật lí", "hóa học", "tiếng anh"]
     writer = csv.writer(file_csv)
     writer.writerow(header)
 
-file = open("D:\\.Project\\DS Project\\Py_DLLT_DS\\raw_data.txt", mode = "r", encoding="utf8")
+file = open("D:\\.Project\\DS Project\\Phan_tich_diem_thi\\raw_data.txt", mode = "r", encoding="utf8")
 datas = file.read().split("\n")
 sbd = 2000000
 
@@ -25,7 +25,7 @@ for data in datas:
     chars = []
     codes = []
 
-    file = open("D:\\.Project\\DS Project\\Py_DLLT_DS\\unicode.txt", mode = "r", encoding="utf8")
+    file = open("D:\\.Project\\DS Project\\Phan_tich_diem_thi\\unicode.txt", mode = "r", encoding="utf8")
     unicode_table = file.read().split("\n")
     for i in unicode_table:
         i = i.split()
@@ -74,15 +74,15 @@ for data in datas:
         if subject in score_list:
             data.append(str(float(score_list[score_list.index(subject) + 1])))  # Chuyen 7.00 -> 7.0
         else:
-            data.append("-1")
+            data.append("")
 
 
     # Ghi file
-    file = open("D:\\.Project\\DS Project\\Py_DLLT_DS\\test.txt", mode = "w", encoding="utf8")
+    file = open("D:\\.Project\\DS Project\\Phan_tich_diem_thi\\test.txt", mode = "w", encoding="utf8")
     for i in range(len(data)):
         file.write(data[i] + ",")
 
 
-    with open("D:\\.Project\\DS Project\\Py_DLLT_DS\\clean_data.csv", "a", encoding="utf8", newline='') as file_csv:
+    with open("D:\\.Project\\DS Project\\Phan_tich_diem_thi\\test_data.csv", "a", encoding="utf8", newline='') as file_csv:
         writer = csv.writer(file_csv)
         writer.writerow(data)
