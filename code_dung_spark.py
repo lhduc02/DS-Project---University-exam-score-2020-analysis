@@ -107,4 +107,4 @@ processed_df = processed_df.drop('score')
 pd_df = processed_df.toPandas()
 so_bao_danh = arr = ['0'+str(2000000+i) for i in range(1, len(pd_df)+1)]
 pd_df.insert(loc=0, column='sbd', value=so_bao_danh)
-pd_df.to_csv("D:\\.Repo\\Incomplete Project\\Thesis Project --- Spark\\diem_thi.csv")
+pd_df.to_csv("D:\\.Repo\\Incomplete Project\\Thesis Project --- Spark\\diem_thi.csv", index=False)
