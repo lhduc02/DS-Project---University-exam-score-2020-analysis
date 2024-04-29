@@ -85,6 +85,7 @@ normal_udf = udf(normal, StringType())
 
 
 
+# Xây dựng PySpark DataFrame
 processed_df = data_df.withColumn("name", replace_unicode_udf("name")) \
     .withColumn("name", unescape_html_udf("name")) \
     .withColumn("score", process_score_udf("score")) \
@@ -104,6 +105,7 @@ processed_df = processed_df.drop('score')
 
 
 
+# Chuyển sang Pandas DataFrame và lưu vào file CSV
 pd_df = processed_df.toPandas()
 so_bao_danh = arr = ['0'+str(2000000+i) for i in range(1, len(pd_df)+1)]
 pd_df.insert(loc=0, column='sbd', value=so_bao_danh)
