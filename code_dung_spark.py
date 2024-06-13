@@ -8,7 +8,6 @@ import html
 spark = SparkSession.builder.appName("Process Data").getOrCreate()
 
 
-
 # Định nghĩa hàm để xử lý các ký tự Unicode
 def replace_unicode(text):
     chars = []
@@ -63,15 +62,37 @@ def normal(txt):
 
 
 
-# Đọc dữ liệu từ file text và tạo DataFrame từ dữ liệu đó
+# Đọc dữ liệu từ file text
 data_rdd = spark.sparkContext.textFile("D:\\.Repo\\Incomplete Project\\Thesis Project --- Spark\\raw_data.txt")
-data_df = data_rdd.filter(lambda line: len(line.strip()) > 0) \
+
+# Kiểm tra dữ liệu đầu vào
+try:
+    sample_data = data_rdd.take(5)
+    #print("Sample data:", sample_data)
+except Exception as e:
+    pass
+    #print(f"Error taking sample data: {e}")
+
+# Lọc và xử lý dữ liệu
+filtered_rdd = data_rdd.filter(lambda line: len(line.strip()) > 0) \
     .map(lambda line: line.strip()) \
     .filter(lambda line: line.startswith("b'<!DOCTYPE html>")) \
     .map(lambda line: line.split("\\n")) \
     .filter(lambda arr: len(arr) == 90) \
-    .map(lambda arr: (arr[61].strip(), arr[64].strip(), arr[67].strip())) \
-    .toDF(["name", "dob", "score"])
+    .map(lambda arr: (arr[61].strip(), arr[64].strip(), arr[67].strip()))
+
+
+# Chuyển RDD thành DataFrame
+def rdd_to_df(rdd):
+    df = rdd.toDF(["name", "dob", "score"])
+    return df
+
+while True:
+    try:
+        data_df = rdd_to_df(filtered_rdd)
+        break
+    except Exception as e:
+        continue
 
 
 
@@ -85,7 +106,6 @@ normal_udf = udf(normal, StringType())
 
 
 
-# Xây dựng PySpark DataFrame
 processed_df = data_df.withColumn("name", replace_unicode_udf("name")) \
     .withColumn("name", unescape_html_udf("name")) \
     .withColumn("score", process_score_udf("score")) \
@@ -101,12 +121,7 @@ processed_df = data_df.withColumn("name", replace_unicode_udf("name")) \
     .withColumn("vat_li", split(normal_udf("score"), " ")[8]) \
     .withColumn("hoc_hoc", split(normal_udf("score"), " ")[9]) \
     .withColumn("khtn", split(normal_udf("score"), " ")[3])
+
 processed_df = processed_df.drop('score')
-
-
-
-# Chuyển sang Pandas DataFrame và lưu vào file CSV
 pd_df = processed_df.toPandas()
-so_bao_danh = arr = ['0'+str(2000000+i) for i in range(1, len(pd_df)+1)]
-pd_df.insert(loc=0, column='sbd', value=so_bao_danh)
-pd_df.to_csv("D:\\.Repo\\Incomplete Project\\Thesis Project --- Spark\\diem_thi.csv", index=False)
+pd_df.to_csv("diem_thi.csv", index = False)
